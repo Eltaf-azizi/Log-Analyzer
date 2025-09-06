@@ -1,5 +1,7 @@
-__pycache__/
 .venv/
-*.log
-*.json
-*.csv
+pycache/
+*.pyc
+.log
+report.
+*.db
+.env

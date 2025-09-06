@@ -1,3 +1,7 @@
-rich
-pyyaml
-pandas
+pandas>=1.5
+python-dateutil>=2.8
+PyYAML>=6.0
+rich>=10.0
+Jinja2>=3.0
+matplotlib>=3.0
+pytest>=7.0

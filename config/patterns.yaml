@@ -1,4 +1,0 @@
-timestamp: '\[(.*?)\]'
-ip: '(\d+\.\d+\.\d+\.\d+)'
-http_status: '" (\d{3}) '
-failed_login: 'Failed password for .* from (\d+\.\d+\.\d+\.\d+)'
