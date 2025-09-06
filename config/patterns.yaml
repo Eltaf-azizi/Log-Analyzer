@@ -1,0 +1,6 @@
+```yaml
+# Example patterns (can be extended). Keys match CLI --pattern values.
+apache_common: '^(?P<ip>\\S+)\\s+\\S+\\s+\\S+\\s+\\[(?P<timestamp>[^\\]]+)\\]\\s+"(?P<method>\\S+)\\s+(?P<path>[^\\s"]+)\\s*(?P<proto>[^"]*)\"\\s+(?P<status>\\d{3})\\s+(?P<size>\\S+)'
+nginx_combined: '^(?P<ip>\\S+)\\s+-\\s+\\S+\\s+\\[(?P<timestamp>[^\\]]+)\\]\\s+"(?P<method>\\S+)\\s+(?P<path>[^\\s"]+)\\s*(?P<proto>[^"]*)\"\\s+(?P<status>\\d{3})\\s+(?P<size>\\S+)\\s+"(?P<referrer>[^"]*)"\\s+"(?P<agent>[^"]*)"'
+auth: '^(?P<timestamp>\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2})\\s+(?P<host>\\S+)\\s+(?P<program>\\S+)(?:\\[\\d+\\])?:\\s+(?P<message>.*)$'
+syslog: '^(?P<timestamp>\\w{3}\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2})\\s+(?P<host>\\S+)\\s+(?P<program>\\S+):\\s+(?P<message>.*)$'
