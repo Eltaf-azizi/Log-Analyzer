@@ -1,0 +1,7 @@
+
+default: 
+  pattern: apache_common
+  window: 5min                # pandas floor window (e.g, '5min', '1H')
+  failed_login_threshold: 5   # failed login attempts in window => anomaly
+  http_5xx_threshold: 3       # number of 5xx in window => anomaly
+  min_events: 1            
