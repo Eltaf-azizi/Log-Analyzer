@@ -33,7 +33,18 @@ def ensure_bucket(df: pd.DataFrame, window: str = "5min") -> pd.DataFrame:
     df = df.copy()
 
     if "dt" not in df.columns:
-        raise VaueError("DataFrame missing 'dt' column")
+        raise ValueError("DataFrame missing 'dt' column")
     
     df["bucket"] = df["dt"].dt.floor(window)
     return df
+
+
+
+# Helper to attempt extracting an IP address from arbitrary text
+IP_RE = re.compile(r'(?P<ip>\d{1,3}(?:\.\d{1,3}){3})')
+def extract_ip_from_text(text: str) -> Optional[str]:
+    if not text:
+        return None
+    m = IP_RE.search(text)
+    return m.group("ip") if m else None
+
