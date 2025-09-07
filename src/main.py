@@ -20,5 +20,5 @@ def main():
         parser.print_help()
 
 
-if __name == "__main__":
+if __name__ == "__main__":
     main()
