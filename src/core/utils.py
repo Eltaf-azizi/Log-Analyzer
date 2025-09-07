@@ -17,3 +17,23 @@ def parse_timestamp(ts: Any) -> Optional[pd.Timestamp]:
         return pd.to_datetime(dt)
     
     except Exception:
+        try:
+            #fallback: try precise apache format
+            return pd.to_datetime(ts, format="%d%b%Y:%H%M:%S %z", errors="coerce")
+        
+        except Exception:
+            return pd.NaT
+        
+
+
+def ensure_bucket(df: pd.DataFrame, window: str = "5min") -> pd.DataFrame:
+    """
+    Return copy of df with a 'bucket' column that floors dt by window.
+    """
+    df = df.copy()
+
+    if "dt" not in df.columns:
+        raise VaueError("DataFrame missing 'dt' column")
+    
+    df["bucket"] = df["dt"].dt.floor(window)
+    return df
