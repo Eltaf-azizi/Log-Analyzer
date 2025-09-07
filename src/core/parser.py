@@ -14,6 +14,7 @@ class LogParser:
     """
 
     
+
     def __init__(self, pattern_name: str = "apache_common"):
         if pattern_name not in PATTERNS:
             raise ValueError(f"Unknown pattern: {pattern_name}")
@@ -27,12 +28,30 @@ class LogParser:
         if not m:
             return None
         d = m.groupdict()
+        
         # Normalize timestamp
         if "timestamp" in d:
             d["dt"] = parse_timestamp(d.get("timestamp"))
+
         # Normalize status if present
         if "status" in d and d.get("status") is not None:
             try:
                 d["status"] = int(d["status"])
             except Exception:
                 pass
+
+        # If ip not present (auth messages), try to extract from message text
+        if "ip" not in d or not d.get("ip"):
+            msg = d.get("message") or ""
+            ip = extract_ip_from_text(msg)
+            if ip:
+                d["ip"] = ip
+        return d
+
+
+    def parse(self, lines: Iterable[str]):
+        for ln in lines:
+            rec = self.parse_line(ln)
+            if rec:
+                yield rec
+
