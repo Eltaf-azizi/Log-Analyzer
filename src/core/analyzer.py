@@ -33,3 +33,20 @@ class Analyzer:
         return out
 
 
+
+    def detect_failed_logins(self, window: str = "10min", threshold: int = 5) -> List[Dict[str, Any]]:
+        """Detect bursts of failed login messages grouped by ip."""
+        if "message" not in self.df.columns:
+            return []
+        # Heuristics for failure strings
+        mask = self.df["message"].str.contains(r"failed password|authentication failure|invalid user", case=False, na=False)
+        df_fail = self.df.loc[mask].copy()
+        if df_fail.empty:
+            return []
+        if "ip" not in df_fail.columns:
+            return []
+        df_fail = ensure_bucket(df_fail, window)
+        grp = df_fail.groupby(["ip", "bucket"]).size().rename("count").reset_index()
+        anomalies = grp[grp["count"] >= threshold]
+        return anomalies.to_dict(orient="records")
+
