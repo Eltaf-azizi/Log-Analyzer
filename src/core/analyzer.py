@@ -49,4 +49,21 @@ class Analyzer:
         grp = df_fail.groupby(["ip", "bucket"]).size().rename("count").reset_index()
         anomalies = grp[grp["count"] >= threshold]
         return anomalies.to_dict(orient="records")
+    
+
+
+    def detect_http_5xx_spikes(self, window: str = "5min", threshold: int = 3) -> List[Dict[str, Any]]:
+        """
+        Detect buckets where 5xx errors exceed threshold.
+        """
+
+        if "status" not in self.df.columns or "dt" not in self.df.columns:
+            return []
+        
+        df = self.df.copy()
+        df = ensure_bucket(df, window)
+        df["is5xx"] = df["status"].between(500, 599)
+        grp = df.groupby("bucket")["is5xx"].sum().rename("count").reset_index()
+        anomalies = grp[grp["count"] >= threshold]
+        return anomalies.to_dict(orient="records")
 
