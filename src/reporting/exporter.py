@@ -39,7 +39,6 @@ def export_json(path: str, summary: Dict[str, Any], anomalies: List[Dict[str, An
 
 
 
-
 def export_csv(path: str, anomalies: List[Dict[str, Any]]) -> None:
     if not anomalies:
         Path(path).write_text("", encoding="utf-8"); return
@@ -50,3 +49,25 @@ def export_csv(path: str, anomalies: List[Dict[str, Any]]) -> None:
         for a in anomalies:
             w.writerow({k: a.get(k, "") for k in keys})
             
+
+
+def export_html(path: str, summary: Dict[str, Any], anomalies: List[Dict[str, Any]]) -> None:
+    keys = sorted({k for a in anomalies for k in a.keys()})
+    html = HTML_TMPL.render(summary=summary, anomalies=anomalies, keys=keys)
+    Path(path).write_text(html, encoding="utf-8")
+
+
+
+def export_report(path: str, fmt: str, summary: Dict[str, Any], anomalies: List[Dict[str, Any]]) -> Optional[str]:
+    fmt = (fmt or "html").lower()
+    if fmt == "json":
+        export_json(path, summary, anomalies)
+        return path
+    if fmt == "csv":
+        export_csv(path, anomalies)
+        return path
+    if fmt == "html":
+        export_html(path, summary, anomalies)
+        return path
+    return None
+
