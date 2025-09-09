@@ -5,6 +5,7 @@ from jinja2 import Template
 from pathlib import Path
 
 
+
 HTML_TMPL = Template("""
 <!doctype html>
 <html>
@@ -29,3 +30,23 @@ HTML_TMPL = Template("""
 </body>
 </html>
 """)
+
+
+
+def export_json(path: str, summary: Dict[str, Any], anomalies: List[Dict[str, Any]]) -> None:
+    payload = {"summary": summary, "anomalies": anomalies}
+    Path(path).write_text(json.dumps(payload, default=str, indent=2), encoding="utf-8")
+
+
+
+
+def export_csv(path: str, anomalies: List[Dict[str, Any]]) -> None:
+    if not anomalies:
+        Path(path).write_text("", encoding="utf-8"); return
+    keys = sorted({k for a in anomalies for k in a.keys()})
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=keys)
+        w.writeheader()
+        for a in anomalies:
+            w.writerow({k: a.get(k, "") for k in keys})
+            
