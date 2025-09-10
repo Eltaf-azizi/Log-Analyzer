@@ -50,7 +50,27 @@ def run_analyze(args):
         a_copy = dict(a)
         a_copy["type"] = "http_5xx_spike"
         anomalies.append(a_copy)
-    
 
-    
+    for a in failed_anoms:
+        a_copy = dict(a)
+        a_copy["type"] = "failed_login_burst"
+        anomalies.append(a_copy)
 
+    print_summary(summary)
+    print_anomalies(anomalies)
+
+    if args.save:
+        out = export_report(args.save, args.format, summary, anomalies)
+        if out:
+            print(f"Report saved: {out}")
+        else:
+            print("Unsupported format for saving.")
+
+
+
+# Expose friendly function used by main
+def run_command(args):
+    if args.command == "analyze":
+        return run_analyze(args)
+    
+    
