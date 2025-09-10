@@ -34,3 +34,23 @@ def run_analyze(args):
         raise SystemExit(f"File not found: {args.file}")
     
 
+    lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    parser = LogParser(pattern)
+    records = list(parser.parse(lines))
+    analyzer = Analyzer(records)
+
+
+    summary = analyzer.summary()
+    http_anoms = analyzer.detect_http_5xx_spikes(window=window, threshold=threshold)
+    failed_anoms = analyzer.detect_failed_logins(window=window, threshold=failed_login_threshold)
+
+    # Annotate types
+    anomalies = []
+    for a in http_anoms:
+        a_copy = dict(a)
+        a_copy["type"] = "http_5xx_spike"
+        anomalies.append(a_copy)
+    
+
+    
+
