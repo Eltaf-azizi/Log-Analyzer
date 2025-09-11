@@ -15,3 +15,21 @@ def make_dummy_http_records():
         rows.append({"dt": base + pd.Timedelta(minutes=5), "status": 500, "ip": "2.2.2.2"})
     return rows
 
+
+
+def test_http_spike_detection():
+
+    rows = make_dummy_http_records()
+    a = Analyzer(rows)
+    anomalies = a.detect_http_5xx_spikes(window="10min", threshold=3)
+    assert len(anomalies) >= 1
+
+
+
+def test_top_ips():
+    
+    rows = [{"ip": "1.1.1.1"}]*7 + [{"ip": "2.2.2.2"}]*3
+    a = Analyzer(rows)
+    summary = a.summary()
+    assert summary["top_ips"].get("1.1.1.1") == 7
+
