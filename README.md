@@ -59,3 +59,13 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 ```
+
+## 🖥 Usage
+#### Analyze a sample Apache log
+```
+python -m src.main analyze --file data/sample.log --pattern apache_common --window 5min --threshold 3 --save report.html --format html
+```
+#### Analyze an auth log for failed logins
+```
+python -m src.main analyze --file data/auth.log --pattern auth --window 10min --threshold 5
+```
