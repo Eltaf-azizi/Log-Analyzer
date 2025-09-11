@@ -21,3 +21,23 @@ Reports can be printed in the terminal with rich formatting or exported as HTML,
  - Report export:
    - Rich CLI output
    - JSON, CSV, or HTML reports
+
+
+## Project Structure
+
+    log-analyzer-basic/
+    ├── README.md
+    ├── requirements.txt
+    ├── .gitignore
+    ├── data/
+    │   ├── sample.log         # example Apache log
+    │   └── auth.log           # example auth log
+    ├── config/
+    │   ├── patterns.yaml      # regex patterns for logs
+    │   └── settings.yaml      # default thresholds & settings
+    ├── src/                   # main source code
+    │   ├── cli/               # CLI parsing and commands
+    │   ├── core/              # log parsing, analysis, utils
+    │   ├── reporting/         # report formatting & exporting
+    │   └── main.py            # entry point
+    └── tests/                 # pytest unit tests
