@@ -69,3 +69,20 @@ python -m src.main analyze --file data/sample.log --pattern apache_common --wind
 ```
 python -m src.main analyze --file data/auth.log --pattern auth --window 10min --threshold 5
 ```
+
+CLI Options
+
+    usage: log-analyzer analyze [-h] --file FILE [--pattern {apache_common,nginx_combined,auth,syslog}]
+                                [--window WINDOW] [--threshold THRESHOLD]
+                                [--save SAVE] [--format {html,json,csv}] [--verbose]
+    
+    options:
+      --file, -f       Path to log file to analyze
+      --pattern, -p    Log pattern (apache_common, nginx_combined, auth, syslog)
+      --window, -w     Aggregation window (e.g., 5min, 10min, 1H)
+      --threshold, -t  Threshold for anomaly detection
+      --save, -s       Save report to file
+      --format, -o     Report format (html, json, csv)
+      --verbose, -v    Verbose output
+
+
