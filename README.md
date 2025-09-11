@@ -41,3 +41,21 @@ Reports can be printed in the terminal with rich formatting or exported as HTML,
     │   ├── reporting/         # report formatting & exporting
     │   └── main.py            # entry point
     └── tests/                 # pytest unit tests
+
+
+## 🚀 Installation
+
+Clone the repo and set up a virtual environment:
+```
+git clone https://github.com/yourname/log-analyzer-basic.git
+cd log-analyzer-basic
+
+python -m venv .venv
+# activate venv
+# mac/linux
+source .venv/bin/activate
+# windows (powershell)
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
