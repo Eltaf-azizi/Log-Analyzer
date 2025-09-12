@@ -121,3 +121,10 @@ This project uses pytest. Run tests with:
 ```
 pytest -q
 ```
+
+## 📌 Roadmap
+
+ - Add more log formats (IIS, custom JSON logs)
+ - Real-time streaming log analysis
+ - Configurable anomaly detection rules
+ - Docker container for easy deployment
