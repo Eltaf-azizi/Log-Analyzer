@@ -115,3 +115,9 @@ Exported report:
  - report.csv → anomaly rows in CSV format
 
 
+## 🧪 Running Tests
+
+This project uses pytest. Run tests with:
+```
+pytest -q
+```
